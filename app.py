@@ -1,9 +1,9 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import os
 
 # Get API key from Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.set_page_config(page_title="Smart Campaign Generator", page_icon="📣")
 
@@ -26,7 +26,7 @@ if st.button("Generate Campaign") and product and audience:
 
     with st.spinner("Generating campaign..."):
         try:
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a marketing expert."},
@@ -35,7 +35,7 @@ if st.button("Generate Campaign") and product and audience:
                 max_tokens=200,
                 temperature=0.7
             )
-            message = response['choices'][0]['message']['content']
+            message = response.choices[0].message.content
             st.success("✅ Campaign Generated!")
             st.text_area("📄 Campaign Text", value=message, height=200)
         except Exception as e:
