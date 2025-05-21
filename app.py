@@ -8,6 +8,12 @@ import os
 st.set_page_config(page_title="🎯 Smart Campaign Generator", layout="centered")
 st.title("🎯 Smart Campaign Generator")
 
+# Session state initialization
+if 'history' not in st.session_state:
+    st.session_state.history = []
+if 'editable_text' not in st.session_state:
+    st.session_state.editable_text = ""
+
 # Sidebar for input
 with st.sidebar:
     st.header("📝 Campaign Settings")
@@ -58,13 +64,27 @@ if st.button("🚀 Generate Campaign"):
             response.raise_for_status()
             result = response.json()
             output = result['choices'][0]['message']['content']
-            st.subheader("📢 Your Campaign Copy")
-            st.text_area("Generated Campaign", output, height=300)
-            st.download_button("📥 Download Campaign", output, file_name="campaign.txt")
+
+            # Save to history and session state
+            st.session_state.history.append(output)
+            st.session_state.editable_text = output
+
         except requests.exceptions.HTTPError as http_err:
             st.error(f"HTTP error occurred: {http_err}\nResponse: {response.text}")
         except Exception as err:
             st.error(f"An error occurred: {err}")
+
+# Editable campaign
+if st.session_state.editable_text:
+    st.subheader("✏️ Edit Your Campaign")
+    edited = st.text_area("Edit Campaign Text", st.session_state.editable_text, height=300)
+    st.download_button("📥 Download Edited Campaign", edited, file_name="edited_campaign.txt")
+
+# History section
+if st.session_state.history:
+    with st.expander("📜 View Campaign History"):
+        for i, past in enumerate(reversed(st.session_state.history[-5:]), 1):
+            st.markdown(f"**Version {len(st.session_state.history) - i + 1}:**\n\n{past}")
 
 # Footer
 st.markdown("""
