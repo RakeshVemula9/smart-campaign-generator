@@ -14,7 +14,14 @@ A Streamlit-powered web application that uses **OpenRouter's large language mode
 
 ---
 
-## 🚀 How to Run
+## 🚀  How It Works
+User enters details like product name, target audience, tone, and CTA.
+
+The app sends a prompt to OpenRouter's API using your selected LLM model.
+
+The model returns a tailored campaign message.
+
+Users can edit, download, or view previously generated campaigns.
 
 ### 🔧 Requirements
 
