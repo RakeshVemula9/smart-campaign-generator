@@ -32,21 +32,20 @@ This is an interactive Streamlit application that allows businesses to upload cu
 ## 🚀 How to Run Locally
 
 ### 1. Clone the Repository
-
-```bash
+'''bash
 git clone https://github.com/yourusername/smart-customer-segmentation.git
 cd smart-customer-segmentation
-2. Install Requirements
+### 2. Install Requirements
 bash
 Copy
 Edit
 pip install -r requirements.txt
-3. Run the App
+### 3. Run the App
 bash
 Copy
 Edit
 streamlit run app.py
-📂 Sample Dataset Format
+### 📂 Sample Dataset Format
 Make sure your CSV includes at least the following columns:
 
 csv
@@ -56,7 +55,7 @@ CustomerID,Gender,Age,Annual Income (k$),Spending Score (1-100)
 1,Male,19,15,39
 2,Male,21,15,81
 ...
-🧠 How It Works
+### 🧠 How It Works
 Upload a dataset.
 
 App preprocesses and standardizes the relevant features.
@@ -76,4 +75,7 @@ Ask questions like:
 "Average age in cluster 1"
 
 Download your segmented dataset with cluster labels.
+
+
+
 
