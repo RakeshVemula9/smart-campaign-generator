@@ -15,7 +15,8 @@ audience = st.text_input("🎯 Target Audience", placeholder="e.g. Women aged 20
 tone = st.selectbox("🎨 Tone of Message", ["Friendly", "Professional", "Excited", "Urgent"])
 
 def generate_campaign(prompt):
-    API_URL = "https://api-inference.huggingface.co/models/gpt2"  # You can replace this with a bigger model if you want
+    API_URL = "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct"
+  # You can replace this with a bigger model if you want
     headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
     payload = {"inputs": prompt, "parameters": {"max_new_tokens": 100, "temperature": 0.7}}
 
