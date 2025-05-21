@@ -1,81 +1,62 @@
-# 🧠 Smart Customer Segmentation Web App
+# 🎯 Smart Campaign Generator
 
-This is an interactive Streamlit application that allows businesses to upload customer data, apply clustering techniques (like K-Means), visualize the results, and ask questions about customer segments via a built-in assistant.
+A Streamlit-powered web application that uses **OpenRouter's large language models (LLMs)** to generate, edit, and manage marketing campaigns based on your product, target audience, and campaign goals.
 
----
+![Streamlit UI Screenshot](https://user-images.githubusercontent.com/placeholder.png) <!-- Optional: Replace with real screenshot -->
 
-## 📌 Features
+## 🔍 Features
 
-- 📁 Upload CSV data (e.g., Mall_Customers.csv)
-- 🧼 Preprocessing with Label Encoding & Standard Scaling
-- 📉 Elbow method to determine optimal number of clusters
-- 📊 Cluster visualization using PCA
-- 🔍 Explore customer segments in detail
-- 💬 Built-in natural language query assistant for segment insights
-- 💾 Download clustered data
-- 🕘 Chat history of your assistant queries
+- 🧠 AI-powered campaign copy generation using OpenRouter (e.g., Mixtral, Hermes)
+- 📝 Editable campaign output directly in the app
+- 📥 Download editable campaign text
+- 🕘 Auto-saved campaign history (view last 5 versions)
+- 🔒 Secure API key input (not stored permanently)
 
 ---
 
-## 🛠 Tech Stack
+## 🚀  How It Works
+User enters details like product name, target audience, tone, and CTA.
 
-- Python
-- Streamlit
-- scikit-learn
-- Pandas
-- Matplotlib & Seaborn
-- PCA for dimensionality reduction
-- KMeans for clustering
+The app sends a prompt to OpenRouter's API using your selected LLM model.
 
----
+The model returns a tailored campaign message.
 
-## 🚀 How to Run Locally
+Users can edit, download, or view previously generated campaigns.
 
-### 1. Clone the Repository
+### 🔧 Requirements
+
+Make sure you have Python 3.8+ installed. Then:
+
 '''bash
-git clone [https://github.com/yourusername/smart-customer-segmentation.git](https://github.com/RakeshVemula9/smart-campaign-generator/tree/main)
-cd smart-customer-segmentation
-### 2. Install Requirements
-bash
-Copy
-Edit
+git clone https://github.com/yourusername/smart-campaign-generator.git
+cd smart-campaign-generator
 pip install -r requirements.txt
-### 3. Run the App
+## ▶️ Start the App
 bash
 Copy
 Edit
 streamlit run app.py
-### 📂 Sample Dataset Format
-Make sure your CSV includes at least the following columns:
 
-csv
+
+## 🔐 API Key Setup
+You’ll need an OpenRouter API Key to use the app:
+
+Go to https://openrouter.ai/
+
+Sign up and generate your API key.
+
+Paste it into the app when prompted, or store it in .streamlit/secrets.toml:
+
+toml
 Copy
 Edit
-CustomerID,Gender,Age,Annual Income (k$),Spending Score (1-100)
-1,Male,19,15,39
-2,Male,21,15,81
-...
-### 🧠 How It Works
-Upload a dataset.
+# .streamlit/secrets.toml
+OPENROUTER_API_KEY = "your-api-key-here"
+### 🛠 Tech Stack
+Streamlit
 
-App preprocesses and standardizes the relevant features.
+OpenRouter API
 
-View the Elbow curve to find the ideal number of clusters.
+Python 3.8+
 
-Visualize clusters in 2D (via PCA).
-
-Explore specific clusters and their average characteristics.
-
-Ask questions like:
-
-"Average income in cluster 2"
-
-"How many customers in cluster 4?"
-
-"Average age in cluster 1"
-
-Download your segmented dataset with cluster labels.
-
-
-
-
+Models: Mixtral-8x7B, Nous Hermes 2 Mixtral, etc.
