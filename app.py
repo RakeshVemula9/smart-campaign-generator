@@ -1,46 +1,67 @@
+# Smart Campaign Generator using OpenRouter (Mixtral)
+
 import streamlit as st
 import requests
 import os
 
-# Load Hugging Face API token from Streamlit secrets or environment variables
-HF_API_TOKEN = st.secrets.get("HF_API_TOKEN") or os.getenv("HF_API_TOKEN")
+# Page config
+st.set_page_config(page_title="🎯 Smart Campaign Generator", layout="centered")
+st.title("🎯 Smart Campaign Generator")
 
-st.set_page_config(page_title="Smart Campaign Generator", page_icon="📣")
-st.title("📣 Smart Campaign Generator")
-st.markdown("Create AI-powered marketing campaigns using Hugging Face!")
+# Sidebar for input
+with st.sidebar:
+    st.header("📝 Campaign Settings")
+    product_name = st.text_input("Product Name", "Xeno CRM")
+    audience = st.text_input("Target Audience", "Retail Store Owners")
+    goal = st.selectbox("Campaign Goal", ["Increase Sales", "Product Awareness", "Upsell", "Launch Event"])
+    tone = st.selectbox("Tone", ["Friendly", "Emotional", "Professional", "Playful"])
+    channel = st.selectbox("Delivery Channel", ["Email", "SMS", "WhatsApp"])
+    call_to_action = st.text_input("Call To Action", "Start Free Trial")
 
-# Input fields
-product = st.text_input("🛍️ Product Name", placeholder="e.g. Organic Face Cream")
-audience = st.text_input("🎯 Target Audience", placeholder="e.g. Women aged 20-35")
-tone = st.selectbox("🎨 Tone of Message", ["Friendly", "Professional", "Excited", "Urgent"])
+# OpenRouter API config
+OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"] if "OPENROUTER_API_KEY" in st.secrets else st.text_input("🔑 Enter your OpenRouter API Key", type="password")
+model = "mistralai/mixtral-8x7b"
 
-def generate_campaign(prompt):
-    API_URL = "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct"
-  # You can replace this with a bigger model if you want
-    headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
-    payload = {"inputs": prompt, "parameters": {"max_new_tokens": 100, "temperature": 0.7}}
+# Prompt builder
+def generate_prompt():
+    return f"""
+Act as a marketing expert.
+Generate a {channel} campaign for the following:
+Product: {product_name}
+Audience: {audience}
+Goal: {goal}
+Tone: {tone}
+Call to Action: {call_to_action}
+The campaign should be engaging, concise, and tailored for {channel.lower()}.
+"""
 
-    response = requests.post(API_URL, headers=headers, json=payload)
-    if response.status_code == 200:
-        data = response.json()
-        # The result is usually a list of dicts with 'generated_text' key
-        return data[0]['generated_text']
+# Generate button
+if st.button("🚀 Generate Campaign"):
+    if not OPENROUTER_API_KEY:
+        st.warning("Please provide your OpenRouter API key.")
     else:
-        raise Exception(f"API Error: {response.status_code} - {response.text}")
+        headers = {
+            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "HTTP-Referer": "https://xeno-campaign-generator.streamlit.app",
+            "X-Title": "Smart Campaign Generator"
+        }
+        body = {
+            "model": model,
+            "messages": [{"role": "user", "content": generate_prompt()}]
+        }
+        response = requests.post("https://openrouter.ai/api/v1/chat/completions", json=body, headers=headers)
 
-if st.button("Generate Campaign") and product and audience:
-    prompt = (
-        f"Generate a {tone.lower()} marketing campaign message for the following:\n"
-        f"Product: {product}\n"
-        f"Target Audience: {audience}\n"
-        f"Make it short, engaging, and suitable for email or SMS."
-    )
-    with st.spinner("Generating campaign..."):
-        try:
-            campaign_text = generate_campaign(prompt)
-            st.success("✅ Campaign Generated!")
-            st.text_area("📄 Campaign Text", value=campaign_text, height=200)
-        except Exception as e:
-            st.error(f"Error: {e}")
-else:
-    st.info("Please fill out all fields and click 'Generate Campaign'.")
+        if response.status_code == 200:
+            result = response.json()
+            output = result['choices'][0]['message']['content']
+            st.subheader("📢 Your Campaign Copy")
+            st.text_area("Generated Campaign", output, height=300)
+            st.download_button("📥 Download Campaign", output, file_name="campaign.txt")
+        else:
+            st.error(f"Failed to generate campaign: {response.text}")
+
+# Footer
+st.markdown("""
+---
+Made with ❤️ using [OpenRouter](https://openrouter.ai) and Streamlit.
+""")
