@@ -20,7 +20,7 @@ with st.sidebar:
 
 # OpenRouter API config
 OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"] if "OPENROUTER_API_KEY" in st.secrets else st.text_input("🔑 Enter your OpenRouter API Key", type="password")
-model = "mistralai/mixtral-8x7b"
+model = "openrouter/command-r-plus"
 
 # Prompt builder
 def generate_prompt():
