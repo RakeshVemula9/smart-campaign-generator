@@ -26,7 +26,7 @@ cd smart-campaign-generator
 pip install -r requirements.txt
 
 
-### 🧪 How It Works
+#### 🧪 How It Works
 User enters details like product name, target audience, tone, and CTA.
 
 The app sends a prompt to OpenRouter's API using your selected LLM model.
