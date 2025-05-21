@@ -2,7 +2,7 @@
 
 A Streamlit-powered web application that uses **OpenRouter's large language models (LLMs)** to generate, edit, and manage marketing campaigns based on your product, target audience, and campaign goals.
 
-![Streamlit UI Screenshot](https://user-images.githubusercontent.com/placeholder.png) <!-- Optional: Replace with real screenshot -->
+![Streamlit UI Screenshot](file:///C:/Users/RAKESH/OneDrive/Pictures/Screenshots/Screenshot%202025-05-21%20164358.png) <!-- Optional: Replace with real screenshot -->
 
 ## 🔍 Features
 
