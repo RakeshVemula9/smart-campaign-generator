@@ -33,7 +33,7 @@ This is an interactive Streamlit application that allows businesses to upload cu
 
 ### 1. Clone the Repository
 '''bash
-git clone https://github.com/yourusername/smart-customer-segmentation.git
+git clone [https://github.com/yourusername/smart-customer-segmentation.git](https://github.com/RakeshVemula9/smart-campaign-generator/tree/main)
 cd smart-customer-segmentation
 ### 2. Install Requirements
 bash
