@@ -31,13 +31,3 @@ Make sure you have Python 3.8+ installed. Then:
 git clone https://github.com/yourusername/smart-campaign-generator.git
 cd smart-campaign-generator
 pip install -r requirements.txt
-
-
-#### 🧪 How It Works
-User enters details like product name, target audience, tone, and CTA.
-
-The app sends a prompt to OpenRouter's API using your selected LLM model.
-
-The model returns a tailored campaign message.
-
-Users can edit, download, or view previously generated campaigns.
