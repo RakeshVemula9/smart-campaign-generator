@@ -1,33 +1,79 @@
-# 🎯 Smart Campaign Generator
+# 🧠 Smart Customer Segmentation Web App
 
-A Streamlit-powered web application that uses **OpenRouter's large language models (LLMs)** to generate, edit, and manage marketing campaigns based on your product, target audience, and campaign goals.
-
-![Streamlit UI Screenshot](file:///C:/Users/RAKESH/OneDrive/Pictures/Screenshots/Screenshot%202025-05-21%20164358.png) <!-- Optional: Replace with real screenshot -->
-
-## 🔍 Features
-
-- 🧠 AI-powered campaign copy generation using OpenRouter (e.g., Mixtral, Hermes)
-- 📝 Editable campaign output directly in the app
-- 📥 Download editable campaign text
-- 🕘 Auto-saved campaign history (view last 5 versions)
-- 🔒 Secure API key input (not stored permanently)
+This is an interactive Streamlit application that allows businesses to upload customer data, apply clustering techniques (like K-Means), visualize the results, and ask questions about customer segments via a built-in assistant.
 
 ---
 
-## 🚀  How It Works
-User enters details like product name, target audience, tone, and CTA.
+## 📌 Features
 
-The app sends a prompt to OpenRouter's API using your selected LLM model.
+- 📁 Upload CSV data (e.g., Mall_Customers.csv)
+- 🧼 Preprocessing with Label Encoding & Standard Scaling
+- 📉 Elbow method to determine optimal number of clusters
+- 📊 Cluster visualization using PCA
+- 🔍 Explore customer segments in detail
+- 💬 Built-in natural language query assistant for segment insights
+- 💾 Download clustered data
+- 🕘 Chat history of your assistant queries
 
-The model returns a tailored campaign message.
+---
 
-Users can edit, download, or view previously generated campaigns.
+## 🛠 Tech Stack
 
-### 🔧 Requirements
+- Python
+- Streamlit
+- scikit-learn
+- Pandas
+- Matplotlib & Seaborn
+- PCA for dimensionality reduction
+- KMeans for clustering
 
-Make sure you have Python 3.8+ installed. Then:
+---
+
+## 🚀 How to Run Locally
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/smart-campaign-generator.git
-cd smart-campaign-generator
+git clone https://github.com/yourusername/smart-customer-segmentation.git
+cd smart-customer-segmentation
+2. Install Requirements
+bash
+Copy
+Edit
 pip install -r requirements.txt
+3. Run the App
+bash
+Copy
+Edit
+streamlit run app.py
+📂 Sample Dataset Format
+Make sure your CSV includes at least the following columns:
+
+csv
+Copy
+Edit
+CustomerID,Gender,Age,Annual Income (k$),Spending Score (1-100)
+1,Male,19,15,39
+2,Male,21,15,81
+...
+🧠 How It Works
+Upload a dataset.
+
+App preprocesses and standardizes the relevant features.
+
+View the Elbow curve to find the ideal number of clusters.
+
+Visualize clusters in 2D (via PCA).
+
+Explore specific clusters and their average characteristics.
+
+Ask questions like:
+
+"Average income in cluster 2"
+
+"How many customers in cluster 4?"
+
+"Average age in cluster 1"
+
+Download your segmented dataset with cluster labels.
+
