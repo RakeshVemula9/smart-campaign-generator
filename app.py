@@ -17,10 +17,13 @@ with st.sidebar:
     tone = st.selectbox("Tone", ["Friendly", "Emotional", "Professional", "Playful"])
     channel = st.selectbox("Delivery Channel", ["Email", "SMS", "WhatsApp"])
     call_to_action = st.text_input("Call To Action", "Start Free Trial")
+    model = st.selectbox("Choose LLM Model", [
+        "mistralai/mixtral-8x7b-instruct",
+        "nousresearch/nous-hermes-2-mixtral"
+    ])
 
 # OpenRouter API config
 OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"] if "OPENROUTER_API_KEY" in st.secrets else st.text_input("🔑 Enter your OpenRouter API Key", type="password")
-model = "openrouter/command-r-plus"
 
 # Prompt builder
 def generate_prompt():
@@ -49,16 +52,19 @@ if st.button("🚀 Generate Campaign"):
             "model": model,
             "messages": [{"role": "user", "content": generate_prompt()}]
         }
-        response = requests.post("https://openrouter.ai/api/v1/chat/completions", json=body, headers=headers)
 
-        if response.status_code == 200:
+        try:
+            response = requests.post("https://openrouter.ai/api/v1/chat/completions", json=body, headers=headers)
+            response.raise_for_status()
             result = response.json()
             output = result['choices'][0]['message']['content']
             st.subheader("📢 Your Campaign Copy")
             st.text_area("Generated Campaign", output, height=300)
             st.download_button("📥 Download Campaign", output, file_name="campaign.txt")
-        else:
-            st.error(f"Failed to generate campaign: {response.text}")
+        except requests.exceptions.HTTPError as http_err:
+            st.error(f"HTTP error occurred: {http_err}\nResponse: {response.text}")
+        except Exception as err:
+            st.error(f"An error occurred: {err}")
 
 # Footer
 st.markdown("""
