@@ -3,7 +3,11 @@ from openai import OpenAI
 import os
 
 # Get API key from Streamlit secrets
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = OpenAI(
+    api_key=st.secrets["OPENAI_API_KEY"],
+    organization=st.secrets["OPENAI_ORG_ID"]
+)
+
 
 st.set_page_config(page_title="Smart Campaign Generator", page_icon="📣")
 
